@@ -1,12 +1,9 @@
-import dotenv from 'dotenv';
 import grpcServer from './grpc/server';
 import * as grpc from '@grpc/grpc-js';
 import logger from '@shared/logger';
 import kafkaConfig, {createUserConsumerConfig} from "./config/kafka.config";
 import {createConsumer} from '@shared/kafka';
 import {userCreated} from "./utils/consumers";
-
-dotenv.config();
 
 const GRPC_PORT = process.env.GRPC_PORT ?? '50051';
 
