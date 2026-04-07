@@ -3,7 +3,7 @@ import * as grpc from '@grpc/grpc-js';
 import logger from '@shared/logger';
 import kafkaConfig, {createUserConsumerConfig} from "./config/kafka.config";
 import {createConsumer} from '@shared/kafka';
-import {userCreated} from "./utils/consumers";
+import {userCreated} from "./lib/consumers";
 
 const GRPC_PORT = process.env.GRPC_PORT ?? '50051';
 
