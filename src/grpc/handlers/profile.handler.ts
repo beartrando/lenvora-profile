@@ -2,6 +2,7 @@ import * as grpc from '@grpc/grpc-js';
 import * as ProfileGrpc from '../generated/profile';
 import * as ProfileService from '../../services/profile.service';
 import {callbackError} from './callback.error';
+import logger from "@shared/logger";
 
 export const upsert = async (
   call: grpc.ServerUnaryCall<ProfileGrpc.UpsertRequest, ProfileGrpc.ProfileObject>,
@@ -22,6 +23,7 @@ export const upsert = async (
     });
 
   } catch (err: any) {
+    logger.log(err);
     callback({
       code: grpc.status.INTERNAL,
       message: err.message,
@@ -52,6 +54,7 @@ export const getProfile = async (
     });
 
   } catch (err: any) {
+    logger.log(err);
     callback({
       code: grpc.status.INTERNAL,
       message: err.message,
