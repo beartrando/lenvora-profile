@@ -7,7 +7,7 @@ const server = new grpc.Server();
 
 server.addService(ProfileService, {
   upsert: profileHandler.upsert,
-  view: profileHandler.getProfile,
+  View: profileHandler.getProfile,
   health: healthHandler.health,
   status: healthHandler.status,
   livez: healthHandler.livez,

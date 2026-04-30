@@ -5,13 +5,13 @@ import {callbackError} from './callback.error';
 import logger from "@shared/logger";
 
 export const upsert = async (
-  call: grpc.ServerUnaryCall<ProfileGrpc.UpsertRequest, ProfileGrpc.ProfileObject>,
+  call: grpc.ServerUnaryCall<ProfileGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
   callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
 ) => {
-  const {ownerId} = call.request;
+  const {userId} = call.request;
 
   try {
-    const result = await ProfileService.upsertProfile(ownerId);
+    const result = await ProfileService.upsertProfile(userId);
 
     callback(null, {
       id: result.id,
@@ -32,13 +32,13 @@ export const upsert = async (
 };
 
 export const getProfile = async (
-  call: grpc.ServerUnaryCall<ProfileGrpc.ViewRequest, ProfileGrpc.ProfileObject>,
+  call: grpc.ServerUnaryCall<ProfileGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
   callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
 ) => {
-  const {id} = call.request;
+  const {userId} = call.request;
 
   try {
-    const result = await ProfileService.getProfile(id);
+    const result = await ProfileService.getProfile(userId);
 
     if (!result) {
       throw new Error("Expected result, but got null");
