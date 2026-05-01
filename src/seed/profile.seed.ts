@@ -15,9 +15,9 @@ export async function seedProfiles() {
 
   // Создаём профили только если их ещё нет
   for (const profile of profiles) {
-    const exists = await prisma.profile.findUnique({ where: { id: profile.id } });
+    const exists = await prisma.profile.findUnique({where: {id: profile.id}});
     if (!exists) {
-      await prisma.profile.create({ data: profile });
+      await prisma.profile.create({data: profile});
     }
   }
 
