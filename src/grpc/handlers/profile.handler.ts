@@ -31,7 +31,7 @@ export const upsert = async (
   }
 };
 
-export const getProfile = async (
+  export const viewProfileByUser = async (
   call: grpc.ServerUnaryCall<ProfileGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
   callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
 ) => {
