@@ -31,6 +31,7 @@ async function startPgBoss() {
     }
   });
 }
+
 async function createKafkaConsumers() {
   const configs = Object.values(kafkaConsumersConfig);
 
@@ -46,7 +47,6 @@ async function bootstrap() {
     await Promise.all([startGrpc(), startPgBoss(), createKafkaConsumers()]);
   } catch (err) {
     logger.error('💥 Ошибка запуска Profile:', err);
-    logger.log('here')
     process.exit(1);
   }
 

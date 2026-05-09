@@ -1,7 +1,7 @@
 import {upsertProfile} from "../services/profile.service";
 import logger from "@shared/logger";
 
-export async function userCreated(message: any): Promise<void> {
+export async function userCreated(topic: string, partition: number, message: any): Promise<void> {
   try {
     await upsertProfile(message.userId);
   } catch (error) {
