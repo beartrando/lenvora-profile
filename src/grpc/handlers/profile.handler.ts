@@ -38,6 +38,7 @@ export const upsert = async (
   const {userId} = call.request;
 
   try {
+    logger.log('getProfileByUser ' + userId);
     const result = await ProfileService.getProfile(userId);
 
     if (!result) {
