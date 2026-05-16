@@ -1,14 +1,16 @@
 import * as grpc from '@grpc/grpc-js';
+import * as AuthGrpc from '../generated/auth';
 import * as ProfileGrpc from '../generated/profile';
 import * as ProfileService from '../../services/profile.service';
 import {callbackError} from './callback.error';
 import logger from "@shared/logger";
+import * as EmptyGrpc from "../generated/common/empty";
 
-export const upsert = async (
-  call: grpc.ServerUnaryCall<ProfileGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
+export const upsertProfile = async (
+  call: grpc.ServerUnaryCall<AuthGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
   callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
 ) => {
-  const {userId} = call.request;
+  const {userId} = call.request
 
   try {
     const result = await ProfileService.upsertProfile(userId);
@@ -32,7 +34,7 @@ export const upsert = async (
 };
 
   export const getProfileByUser = async (
-  call: grpc.ServerUnaryCall<ProfileGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
+  call: grpc.ServerUnaryCall<AuthGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
   callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
 ) => {
   const {userId} = call.request;

@@ -6,7 +6,7 @@ import * as healthHandler from "./handlers/health.handler";
 const server = new grpc.Server();
 
 server.addService(ProfileService, {
-  upsert: profileHandler.upsert,
+  upsert: profileHandler.upsertProfile,
   getProfileByUser: profileHandler.getProfileByUser,
 
   health: healthHandler.health,
