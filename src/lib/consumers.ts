@@ -3,7 +3,7 @@ import logger from "@shared/logger";
 
 export async function userCreated(topic: string, partition: number, message: any): Promise<void> {
   try {
-    await upsertProfile(message.userId);
+    await upsertProfile(message.id);
   } catch (error) {
     logger.error(`[Kafka] Failed to process message`, {
       rawValue: message.userId,
