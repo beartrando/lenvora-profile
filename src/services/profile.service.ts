@@ -1,7 +1,7 @@
 import {prisma} from '../lib/prisma';
 import {kafkaProducersConfig} from "../config/kafka.config";
-import {enqueueEventTx} from "../lib/pgBoss";
 import logger from "@shared/logger";
+import {enqueueEvent} from "@shared/pg-boss/src/enqueueEvent";
 
 export async function findProfile(ownerId: string) {
   return prisma.profile.findFirst({where: {ownerId}});
@@ -23,7 +23,7 @@ export async function upsertProfile(ownerId: string) {
     update: {nickname},
   });
 
-  enqueueEventTx(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({ownerId: profile.id})});
+  enqueueEvent(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({ownerId: profile.id})});
 
   return profile;
 }
