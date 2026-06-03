@@ -10,19 +10,19 @@ datasource db {
 
 model profile {
   id         String   @id @default(uuid())
-  ownerId    String   @unique
+  userId     String   @unique
   nickname   String   @default("guest")
   level      Int      @default(1)
   rating     Int      @default(1000)
   experience Int      @default(0)
 
-  achievements owner_achievement[]
+  achievements profile_achievement[]
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
 
-model owner_achievement {
+model profile_achievement {
   id            String   @id @default(uuid())
   profileId     String
   achievementId String
@@ -41,7 +41,7 @@ model achievement {
   title       String   @unique
   description String?
 
-  Owners       owner_achievement[]
+  Profiles    profile_achievement[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

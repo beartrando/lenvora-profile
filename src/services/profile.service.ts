@@ -3,13 +3,13 @@ import {kafkaProducersConfig} from "../config/kafka.config";
 import logger from "@shared/logger";
 import {enqueueEvent} from "@shared/pg-boss/src/enqueueEvent";
 
-export async function findProfile(ownerId: string) {
-  return prisma.profile.findFirst({where: {ownerId}});
+export async function findProfile(userId: string) {
+  return prisma.profile.findFirst({where: {userId}});
 }
 
-export async function upsertProfile(ownerId: string) {
+export async function upsertProfile(userId: string) {
 
-  const existing = await prisma.profile.findUnique({where: {ownerId}});
+  const existing = await prisma.profile.findUnique({where: {userId}});
 
   if (existing) {
     return existing;
@@ -18,20 +18,20 @@ export async function upsertProfile(ownerId: string) {
   const nickname = generateGuestNickname();
 
   const profile = await prisma.profile.upsert({
-    where: {ownerId},
-    create: {ownerId, nickname},
+    where: {userId},
+    create: {userId, nickname},
     update: {nickname},
   });
 
-  enqueueEvent(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({ownerId: profile.id})});
+  enqueueEvent(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({userId: profile.id})});
 
   return profile;
 }
 
-export async function getProfile(ownerId: string) {
-  logger.log('getProfile ownerId ' + ownerId);
+export async function getProfile(userId: string) {
+  logger.log('getProfile userId ' + userId);
   return prisma.profile.findUnique({
-    where: {ownerId: ownerId},
+    where: {userId: userId},
   });
 }
 

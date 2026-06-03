@@ -7,7 +7,7 @@ export async function seedProfiles() {
   const profiles = await Promise.all(
     [...Array(100)].map(async (_, i) => ({
       id: `user-${i + 1}`,
-      ownerId: `profile-${i + 1}`,
+      userId: `profile-${i + 1}`,
       nickname: `Guest${i + 1}`,
       level: 1,
     }))

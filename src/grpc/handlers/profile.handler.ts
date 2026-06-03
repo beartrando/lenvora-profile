@@ -15,9 +15,10 @@ export const upsertProfile = async (
   try {
     const result = await ProfileService.upsertProfile(userId);
 
+
     callback(null, {
       id: result.id,
-      ownerId: result.ownerId,
+      userId: result.userId,
       nickname: result.nickname,
       level: result.level,
       rating: result.rating,
@@ -33,7 +34,8 @@ export const upsertProfile = async (
   }
 };
 
-  export const getProfileByUser = async (
+
+export const getProfileByUser = async (
   call: grpc.ServerUnaryCall<AuthGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
   callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
 ) => {
@@ -49,7 +51,7 @@ export const upsertProfile = async (
 
     callback(null, {
       id: result.id,
-      ownerId: result.ownerId,
+      userId: result.userId,
       nickname: result.nickname,
       level: result.level,
       rating: result.rating,
