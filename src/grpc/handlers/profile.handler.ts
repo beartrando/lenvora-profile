@@ -1,19 +1,17 @@
 import * as grpc from '@grpc/grpc-js';
-import * as AuthGrpc from '../generated/auth';
-import * as ProfileGrpc from '../generated/profile';
-import * as ProfileService from '../../services/profile.service';
-import {callbackError} from './callback.error';
+import * as authGrpc from '../generated/auth';
+import * as profileGrpc from '../generated/profile';
+import * as profileService from '../../services/profile.service';
 import logger from "@shared/logger";
-import * as EmptyGrpc from "../generated/common/empty";
 
 export const upsertProfile = async (
-  call: grpc.ServerUnaryCall<AuthGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
-  callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
+  call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
+  callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
 ) => {
   const {userId} = call.request
 
   try {
-    const result = await ProfileService.upsertProfile(userId);
+    const result = await profileService.upsertProfile(userId);
 
 
     callback(null, {
@@ -36,14 +34,14 @@ export const upsertProfile = async (
 
 
 export const getProfileByUser = async (
-  call: grpc.ServerUnaryCall<AuthGrpc.UserIdRequest, ProfileGrpc.ProfileObject>,
-  callback: grpc.sendUnaryData<ProfileGrpc.ProfileObject>
+  call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
+  callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
 ) => {
   const {userId} = call.request;
 
   try {
     logger.log('getProfileByUser ' + userId);
-    const result = await ProfileService.getProfile(userId);
+    const result = await profileService.getProfile(userId);
 
     if (!result) {
       throw new Error("Expected result, but got null");
