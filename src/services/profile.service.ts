@@ -1,6 +1,5 @@
 import {prisma} from '../lib/prisma';
 import {kafkaProducersConfig} from "../config/kafka.config";
-import logger from "@shared/logger";
 import {enqueueEvent} from "@shared/pg-boss/src/enqueueEvent";
 
 export async function findProfile(userId: string) {
@@ -28,10 +27,16 @@ export async function upsertProfile(userId: string) {
   return profile;
 }
 
-export async function getProfile(userId: string) {
-  logger.log('getProfile userId ' + userId);
+export async function getProfileByUser(userId: string) {
+  // logger.log('getProfile userId ' + userId);
   return prisma.profile.findUnique({
     where: {userId: userId},
+  });
+}
+
+export async function getProfile(profileId: string) {
+  return prisma.profile.findUnique({
+    where: {id: profileId},
   });
 }
 

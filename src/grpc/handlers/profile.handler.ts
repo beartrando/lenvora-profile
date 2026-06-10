@@ -24,6 +24,38 @@ export const upsertProfile = async (
     });
 
   } catch (err: any) {
+    logger.error(err);
+    callback({
+      code: grpc.status.INTERNAL,
+      message: err.message,
+    }, null);
+  }
+};
+
+export const getProfile = async (
+  call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, profileGrpc.ProfileObject>,
+  callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+) => {
+  const {profileId} = call.request;
+
+  try {
+    // logger.log('getProfileByUser ' + userId);
+    const result = await profileService.getProfile(profileId);
+
+    if (!result) {
+      throw new Error("Expected result, but got null");
+    }
+
+    callback(null, {
+      id: result.id,
+      userId: result.userId,
+      nickname: result.nickname,
+      level: result.level,
+      rating: result.rating,
+      experience: result.experience,
+    });
+
+  } catch (err: any) {
     logger.log(err);
     callback({
       code: grpc.status.INTERNAL,
@@ -40,8 +72,8 @@ export const getProfileByUser = async (
   const {userId} = call.request;
 
   try {
-    logger.log('getProfileByUser ' + userId);
-    const result = await profileService.getProfile(userId);
+    // logger.log('getProfileByUser ' + userId);
+    const result = await profileService.getProfileByUser(userId);
 
     if (!result) {
       throw new Error("Expected result, but got null");
