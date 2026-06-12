@@ -33,10 +33,10 @@
     "@bufbuild/protobuf": "^2.11.0",
     "@grpc/grpc-js": "^1.14.3",
     "@prisma/client": "^6.19.3",
+    "kafkajs": "^2.2.4",
     "@shared/kafka": "workspace:*",
     "@shared/logger": "workspace:*",
     "jsonwebtoken": "^9.0.3",
-    "kafkajs": "^2.2.4",
     "morgan": "^1.10.1",
     "pg-boss": "^12.15.0"
   }
