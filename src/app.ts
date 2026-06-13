@@ -26,7 +26,7 @@ async function startGrpc() {
 }
 
 async function startPgBoss() {
-await initBoss(pgBossConfig, async () => {
+  await initBoss(pgBossConfig, async () => {
     for (const topicConfig of Object.values(kafkaProducersConfig)) {
       await startWorker(kafkaConfig, topicConfig);
     }
