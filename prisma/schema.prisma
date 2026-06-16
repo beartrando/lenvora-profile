@@ -9,7 +9,7 @@ datasource db {
   directUrl = env("DATABASE_DIRECT_URL")
 }
 
-model profile {
+model Profile {
   id         String   @id @default(uuid())
   userId     String   @unique
   nickname   String   @default("guest")
@@ -17,19 +17,19 @@ model profile {
   rating     Int      @default(1000)
   experience Int      @default(0)
 
-  achievements profile_achievement[]
+  achievements ProfileAchievement[]
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
 
-model profile_achievement {
+model ProfileAchievement {
   id            String   @id @default(uuid())
   profileId     String
   achievementId String
 
-  profile       profile  @relation(fields: [profileId], references: [id])
-  achievement   achievement @relation(fields: [achievementId], references: [id])
+  profile       Profile  @relation(fields: [profileId], references: [id])
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -37,18 +37,18 @@ model profile_achievement {
   @@unique([profileId, achievementId])
 }
 
-model achievement {
+model Achievement {
   id          String   @id @default(uuid())
   title       String   @unique
   description String?
 
-  Profiles    profile_achievement[]
+  Profiles    ProfileAchievement[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model experience_level {
+model ExperienceLevel {
   level        Int    @id
   nextRequired Int
 

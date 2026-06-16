@@ -3,6 +3,7 @@ import * as authGrpc from '../generated/auth';
 import * as profileGrpc from '../generated/profile';
 import * as profileService from '../../services/profile.service';
 import logger from "@shared/logger";
+import {profileToGrpc} from "../../lib/grpc-prisma-converters/profile";
 
 export const upsertProfile = async (
   call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
@@ -13,15 +14,7 @@ export const upsertProfile = async (
   try {
     const result = await profileService.upsertProfile(userId);
 
-
-    callback(null, {
-      id: result.id,
-      userId: result.userId,
-      nickname: result.nickname,
-      level: result.level,
-      rating: result.rating,
-      experience: result.experience,
-    });
+    callback(null, profileToGrpc(result));
 
   } catch (err: any) {
     logger.error(err);
@@ -46,14 +39,7 @@ export const getProfile = async (
       throw new Error("Expected result, but got null");
     }
 
-    callback(null, {
-      id: result.id,
-      userId: result.userId,
-      nickname: result.nickname,
-      level: result.level,
-      rating: result.rating,
-      experience: result.experience,
-    });
+    callback(null, profileToGrpc(result));
 
   } catch (err: any) {
     logger.log(err);
@@ -79,14 +65,7 @@ export const getProfileByUser = async (
       throw new Error("Expected result, but got null");
     }
 
-    callback(null, {
-      id: result.id,
-      userId: result.userId,
-      nickname: result.nickname,
-      level: result.level,
-      rating: result.rating,
-      experience: result.experience,
-    });
+    callback(null, profileToGrpc(result));
 
   } catch (err: any) {
     logger.log(err);

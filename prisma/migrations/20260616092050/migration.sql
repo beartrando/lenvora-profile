@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "profile" (
+CREATE TABLE "Profile" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "nickname" TEXT NOT NULL DEFAULT 'guest',
@@ -9,52 +9,52 @@ CREATE TABLE "profile" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "profile_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "profile_achievement" (
+CREATE TABLE "ProfileAchievement" (
     "id" TEXT NOT NULL,
     "profileId" TEXT NOT NULL,
     "achievementId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "profile_achievement_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ProfileAchievement_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "achievement" (
+CREATE TABLE "Achievement" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "achievement_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Achievement_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "experience_level" (
+CREATE TABLE "ExperienceLevel" (
     "level" INTEGER NOT NULL,
     "nextRequired" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "experience_level_pkey" PRIMARY KEY ("level")
+    CONSTRAINT "ExperienceLevel_pkey" PRIMARY KEY ("level")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "profile_userId_key" ON "profile"("userId");
+CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "profile_achievement_profileId_achievementId_key" ON "profile_achievement"("profileId", "achievementId");
+CREATE UNIQUE INDEX "ProfileAchievement_profileId_achievementId_key" ON "ProfileAchievement"("profileId", "achievementId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "achievement_title_key" ON "achievement"("title");
+CREATE UNIQUE INDEX "Achievement_title_key" ON "Achievement"("title");
 
 -- AddForeignKey
-ALTER TABLE "profile_achievement" ADD CONSTRAINT "profile_achievement_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "profile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProfileAchievement" ADD CONSTRAINT "ProfileAchievement_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "profile_achievement" ADD CONSTRAINT "profile_achievement_achievementId_fkey" FOREIGN KEY ("achievementId") REFERENCES "achievement"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProfileAchievement" ADD CONSTRAINT "ProfileAchievement_achievementId_fkey" FOREIGN KEY ("achievementId") REFERENCES "Achievement"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
