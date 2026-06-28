@@ -1,6 +1,6 @@
 import {prisma} from '../lib/prisma';
 import {kafkaProducersConfig} from "../config/kafka.config";
-import {enqueueEvent} from "@shared/pg-boss/src/enqueueEvent";
+import {enqueueEvent} from "@shared/pg-boss-helper/src/enqueueEvent";
 
 export async function findProfile(userId: string) {
   return prisma.profile.findFirst({where: {userId}});

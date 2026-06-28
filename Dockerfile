@@ -43,6 +43,16 @@ USER root
 RUN corepack enable && pnpm install --frozen-lockfile --prod && pnpm run --filter profile build
 RUN chown -R node:node /usr/src/app
 
+
+#RUN corepack enable && pnpm install
+#
+#RUN pnpm --filter profile exec prisma generate --schema=services/profile/prisma/schema.prisma
+#
+#RUN pnpm --filter profile run build
+#
+#RUN pnpm install --frozen-lockfile --prod
+
+
 USER node
 
 EXPOSE 50051
