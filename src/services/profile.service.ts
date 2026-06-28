@@ -1,6 +1,6 @@
 import {prisma} from '../lib/prisma';
 import {kafkaProducersConfig} from "../config/kafka.config";
-import {enqueueEvent} from "@shared/pg-boss-manager/src/enqueueEvent";
+import pgBossManager from "@shared/pg-boss-manager";
 
 export async function findProfile(userId: string) {
   return prisma.profile.findFirst({where: {userId}});
@@ -22,7 +22,7 @@ export async function upsertProfile(userId: string) {
     update: {nickname},
   });
 
-  enqueueEvent(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({userId: profile.id})});
+  pgBossManager.enqueueEvent(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({userId: profile.id})});
 
   return profile;
 }
