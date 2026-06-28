@@ -3,7 +3,8 @@ import * as grpc from '@grpc/grpc-js';
 import logger from '@shared/logger';
 import kafkaConfig, {kafkaConsumersConfig, kafkaProducersConfig} from "./config/kafka.config";
 import {createConsumer} from "@shared/kafka-manager";
-import {initBoss, startKafkaWorker} from "@shared/pg-boss-helper";
+import pgBossManager from "@shared/pg-boss-manager";
+import {initBoss, startKafkaWorker} from "@shared/pg-boss-manager";
 import pgBossConfig from "./config/pg.boss.config";
 
 const GRPC_PORT = process.env.GRPC_PORT ?? '50051';
@@ -26,11 +27,16 @@ async function startGrpc() {
 }
 
 async function startPgBoss() {
-  await initBoss(pgBossConfig, async () => {
+  pgBossManager.initBoss(pgBossConfig, async () => {
     for (const topicConfig of Object.values(kafkaProducersConfig)) {
       await startKafkaWorker(kafkaConfig, topicConfig);
     }
-  });
+  }
+  // await initBoss(pgBossConfig, async () => {
+  //   for (const topicConfig of Object.values(kafkaProducersConfig)) {
+  //     await startKafkaWorker(kafkaConfig, topicConfig);
+  //   }
+  // });
 }
 
 async function createKafkaConsumers() {

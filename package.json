@@ -35,7 +35,7 @@
     "@grpc/grpc-js": "^1.14.3",
     "@prisma/client": "^6.19.3",
     "kafkajs": "^2.2.4",
-    "@shared/pg-boss-helper": "workspace:*",
+    "@shared/pg-boss-manager": "workspace:*",
     "@shared/kafka-manager": "workspace:*",
     "@shared/logger": "workspace:*",
     "jsonwebtoken": "^9.0.3",
