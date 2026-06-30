@@ -12,6 +12,7 @@ COPY tsconfig.json ./
 COPY proto ./proto
 
 COPY services/profile/package*.json ./services/profile/
+COPY services/profile/prisma ./services/profile/prisma
 COPY services/profile/jest.config.js ./services/profile/
 COPY services/profile/tsconfig.json ./services/profile/
 COPY services/profile/prisma ./services/profile/prisma/
