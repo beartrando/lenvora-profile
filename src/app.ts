@@ -31,11 +31,6 @@ async function startPgBoss() {
       await pgBossManager.startKafkaWorker(kafkaConfig, topicConfig);
     }
   });
-  // await initBoss(pgBossConfig, async () => {
-  //   for (const topicConfig of Object.values(kafkaProducersConfig)) {
-  //     await startKafkaWorker(kafkaConfig, topicConfig);
-  //   }
-  // });
 }
 
 async function createKafkaConsumers() {
@@ -65,14 +60,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-
-
-
-
-
-
-
-
-
-
-
