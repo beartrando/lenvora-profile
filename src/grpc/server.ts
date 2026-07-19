@@ -1,4 +1,5 @@
 import {ProfileService} from './generated/profile';
+import {HealthService} from './generated/common/health';
 import * as grpc from '@grpc/grpc-js';
 import * as profileHandler from "./handlers/profile.handler";
 import * as healthHandler from "./handlers/health.handler";
@@ -10,8 +11,10 @@ server.addService(ProfileService, {
   getProfile: profileHandler.getProfile,
   getProfileByUser: profileHandler.upsertProfile,
   // getProfileByUser: profileHandler.getProfileByUser,
+});
 
-  health: healthHandler.health,
+server.addService(HealthService, {
+  check: healthHandler.check,
   status: healthHandler.status,
   livez: healthHandler.livez,
   readyz: healthHandler.readyz,
