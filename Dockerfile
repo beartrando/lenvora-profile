@@ -40,6 +40,8 @@ RUN pnpm --filter profile prisma:generate
 # ---------- DEV ----------
 FROM deps AS dev
 
+COPY services/profile/tsconfig.test.json ./services/profile/
+
 ENV NODE_ENV=development
 
 RUN chown -R node:node /usr/src/app
