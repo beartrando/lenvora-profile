@@ -4,74 +4,102 @@ import * as profileGrpc from '../generated/profile';
 import * as profileService from '../../services/profile.service';
 import logger from "@shared/logger";
 import {profileToGrpc} from "../../lib/grpc-prisma-converters/profile";
+import {getUserIdFromGrpcRequest} from "../../lib/grpcRequestMetadata";
 
-export const upsertProfile = async (
-  call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
-  callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+export const upsert = async (
+    call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
+    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
 ) => {
-  const {userId} = call.request
+    const {userId} = call.request
 
-  try {
-    const result = await profileService.upsertProfile(userId);
+    try {
+        const result = await profileService.upsert(userId);
 
-    callback(null, profileToGrpc(result));
+        callback(null, profileToGrpc(result));
 
-  } catch (err: any) {
-    logger.error(err);
-    callback({
-      code: grpc.status.INTERNAL,
-      message: err.message,
-    }, null);
-  }
+    } catch (err: any) {
+        logger.error(err);
+        callback({
+            code: grpc.status.INTERNAL,
+            message: err.message,
+        }, null);
+    }
 };
 
-export const getProfile = async (
-  call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, profileGrpc.ProfileObject>,
-  callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+export const get = async (
+    call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, profileGrpc.ProfileObject>,
+    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
 ) => {
-  const {profileId} = call.request;
+    const {profileId} = call.request;
 
-  try {
-    // logger.log('getProfileByUser ' + userId);
-    const result = await profileService.getProfile(profileId);
+    try {
+        logger.log('getProfileById ' + profileId);
+        const result = await profileService.get(profileId);
 
-    if (!result) {
-      throw new Error("Expected result, but got null");
+        if (!result) {
+            throw new Error("Expected result, but got null");
+        }
+
+        callback(null, profileToGrpc(result));
+
+    } catch (err: any) {
+        logger.log(err);
+        callback({
+            code: grpc.status.INTERNAL,
+            message: err.message,
+        }, null);
     }
+};
 
-    callback(null, profileToGrpc(result));
+export const getMe = async (
+    call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, profileGrpc.ProfileObject>,
+    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+) => {
+    // logger.log(call);
+    const userId = getUserIdFromGrpcRequest(call);
 
-  } catch (err: any) {
-    logger.log(err);
-    callback({
-      code: grpc.status.INTERNAL,
-      message: err.message,
-    }, null);
-  }
+    try {
+
+        // logger.log(userId);
+        const result = await profileService.getByUser(userId);
+
+        if (!result) {
+            throw new Error("Expected result, but got null");
+        }
+
+        callback(null, profileToGrpc(result));
+
+    } catch (err: any) {
+        logger.log(err);
+        callback({
+            code: grpc.status.INTERNAL,
+            message: err.message,
+        }, null);
+    }
 };
 
 
-export const getProfileByUser = async (
-  call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
-  callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+export const getByUser = async (
+    call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
+    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
 ) => {
-  const {userId} = call.request;
+    const {userId} = call.request;
 
-  try {
-    // logger.log('getProfileByUser ' + userId);
-    const result = await profileService.getProfileByUser(userId);
+    try {
+        // logger.log('getProfileByUser ' + userId);
+        const result = await profileService.getByUser(userId);
 
-    if (!result) {
-      throw new Error("Expected result, but got null");
+        if (!result) {
+            throw new Error("Expected result, but got null");
+        }
+
+        callback(null, profileToGrpc(result));
+
+    } catch (err: any) {
+        logger.log(err);
+        callback({
+            code: grpc.status.INTERNAL,
+            message: err.message,
+        }, null);
     }
-
-    callback(null, profileToGrpc(result));
-
-  } catch (err: any) {
-    logger.log(err);
-    callback({
-      code: grpc.status.INTERNAL,
-      message: err.message,
-    }, null);
-  }
 };

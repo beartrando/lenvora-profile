@@ -35,6 +35,8 @@ RUN pnpm install --offline --frozen-lockfile
 RUN mkdir -p ./services/profile/src/grpc/generated
 RUN pnpm --filter profile proto:generate
 
+RUN pnpm --filter profile prisma:generate
+
 # ---------- DEV ----------
 FROM deps AS dev
 
@@ -61,7 +63,6 @@ RUN pnpm --filter @shared/grpc-client-manager build
 RUN pnpm --filter @shared/kafka-manager build
 RUN pnpm --filter @shared/pg-boss-manager build
 
-RUN pnpm --filter profile prisma:generate
 RUN pnpm --filter profile build
 
 RUN pnpm --filter profile deploy /deploy --prod

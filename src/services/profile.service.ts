@@ -3,46 +3,46 @@ import {kafkaProducersConfig} from "../config/kafka.config";
 import pgBossManager from "@shared/pg-boss-manager";
 
 export async function findProfile(userId: string) {
-  return prisma.profile.findFirst({where: {userId}});
+    return prisma.profile.findFirst({where: {userId}});
 }
 
-export async function upsertProfile(userId: string) {
+export async function upsert(userId: string) {
 
-  const existing = await prisma.profile.findUnique({where: {userId}});
+    const existing = await prisma.profile.findUnique({where: {userId}});
 
-  if (existing) {
-    return existing;
-  }
+    if (existing) {
+        return existing;
+    }
 
-  const nickname = generateGuestNickname();
+    const nickname = generateGuestNickname();
 
-  const profile = await prisma.profile.upsert({
-    where: {userId},
-    create: {userId, nickname},
-    update: {nickname},
-  });
+    const profile = await prisma.profile.upsert({
+        where: {userId},
+        create: {userId, nickname},
+        update: {nickname},
+    });
 
-  pgBossManager.enqueueEvent(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({userId: profile.id})});
+    pgBossManager.enqueueEvent(kafkaProducersConfig.topicProfileCreated, {value: JSON.stringify({userId: profile.id})});
 
-  return profile;
+    return profile;
 }
 
-export async function getProfileByUser(userId: string) {
-  // logger.log('getProfile userId ' + userId);
-  return prisma.profile.findUnique({
-    where: {userId: userId},
-  });
+export async function getByUser(userId: string) {
+    // logger.log('getProfile userId ' + userId);
+    return prisma.profile.findUnique({
+        where: {userId: userId},
+    });
 }
 
-export async function getProfile(profileId: string) {
-  return prisma.profile.findUnique({
-    where: {id: profileId},
-  });
+export async function get(profileId: string) {
+    return prisma.profile.findUnique({
+        where: {id: profileId},
+    });
 }
 
 
 function generateGuestNickname(): string {
-  const randomDigits = Math.floor(10000000 + Math.random() * 90000000);
+    const randomDigits = Math.floor(10000000 + Math.random() * 90000000);
 
-  return `Guest${randomDigits}`;
+    return `Guest${randomDigits}`;
 }
