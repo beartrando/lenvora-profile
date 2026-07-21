@@ -25,13 +25,13 @@ async function startGrpc() {
     });
 }
 
-async function startPgBoss() {
-    pgBossManager.initBoss(pgBossConfig, async () => {
-        for (const topicConfig of Object.values(kafkaProducersConfig)) {
-            await pgBossManager.startKafkaWorker(kafkaConfig, topicConfig);
-        }
-    });
-}
+// async function startPgBoss() {
+//     await pgBossManager.initBoss(pgBossConfig, async () => {
+//         for (const topicConfig of Object.values(kafkaProducersConfig)) {
+//             await pgBossManager.startKafkaWorker(kafkaConfig, topicConfig);
+//         }
+//     });
+// }
 
 async function createKafkaConsumers() {
     const configs = Object.values(kafkaConsumersConfig);
@@ -45,7 +45,11 @@ async function createKafkaConsumers() {
 
 async function bootstrap() {
     try {
-        await Promise.all([startGrpc(), startPgBoss(), createKafkaConsumers()]);
+        await Promise.all([
+            startGrpc(),
+            // startPgBoss(),
+            createKafkaConsumers()
+        ]);
     } catch (err) {
         logger.error('💥 Failed to start Profile:', err);
         process.exit(1);
