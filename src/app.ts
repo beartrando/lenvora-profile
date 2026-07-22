@@ -41,8 +41,6 @@ async function startGrpc(): Promise<void> {
     );
 }
 
-
-
 async function startPgBoss(): Promise<void> {
     void pgBossManager.start(
         pgBossConfig,
@@ -124,8 +122,8 @@ async function bootstrap(): Promise<void> {
 
     try {
         await startGrpc();
-        await createKafkaConsumers();
         await startPgBoss();
+        await createKafkaConsumers();
         logger.info(
             '🚀 Profile service started',
         );

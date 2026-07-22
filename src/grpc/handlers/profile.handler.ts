@@ -60,7 +60,7 @@ export const getMe = async (
 
     try {
 
-        // logger.log(userId);
+        logger.log(userId);
         const result = await profileService.getByUser(userId);
 
         if (!result) {
