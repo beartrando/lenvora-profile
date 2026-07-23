@@ -4,13 +4,13 @@ import * as profileGrpc from '../generated/profile';
 import * as profileService from '../../services/profile.service';
 import logger from "@shared/logger";
 import {profileToGrpc} from "../../lib/grpc-prisma-converters/profile";
-import {getUserIdFromGrpcRequest} from "../../lib/grpcRequestMetadata";
+import {getUserIdFromGrpcRequest, getUserIdFromJwt} from "../../lib/grpcRequestMetadata";
 
 export const upsert = async (
     call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
     callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
 ) => {
-    const {userId} = call.request
+    const userId = getUserIdFromGrpcRequest(call);
 
     try {
         const result = await profileService.upsert(userId);
@@ -33,7 +33,7 @@ export const get = async (
     const {profileId} = call.request;
 
     try {
-        logger.log('getProfileById ' + profileId);
+        // logger.log('getProfileById ' + profileId);
         const result = await profileService.get(profileId);
 
         if (!result) {
