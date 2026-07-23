@@ -22,12 +22,7 @@ export async function upsert(userId: string) {
         update: {nickname},
     });
 
-    pgBossManager.queue.enqueue(
-        kafkaProducersConfig.profileCreated,
-        {
-            userId: profile.id,
-        },
-    );
+    pgBossManager.queue.enqueue(kafkaProducersConfig.profileCreated, profile);
 
     return profile;
 }
