@@ -1,4 +1,4 @@
-import { userCreated } from '../lib/consumers';
+// import { userCreated } from '../utils/consumers';
 
 
 export const kafkaConfig = {
@@ -16,15 +16,19 @@ export const kafkaConfig = {
         'profile-service',
 };
 
+type ConsumerConfig = {
+    topic: string;
+    handler: (message: unknown) => Promise<void>;
+};
 
-export const kafkaConsumersConfig = {
-    userCreated: {
-        topic:
-            process.env.KAFKA_TOPIC_USER_CREATED ??
-            'user.created',
-
-        handler: userCreated,
-    },
+export const kafkaConsumersConfig: Record<string, ConsumerConfig> = {
+    // userCreated: {
+    //     topic:
+    //         process.env.KAFKA_TOPIC_USER_CREATED ??
+    //         'user.created',
+    //
+    //     handler: userCreated,
+    // },
 };
 
 
