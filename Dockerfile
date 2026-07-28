@@ -19,7 +19,6 @@ COPY services/profile/jest.config.js ./services/profile/
 COPY services/profile/tsconfig.json ./services/profile/
 COPY services/profile/src ./services/profile/src/
 COPY services/profile/__tests__ ./services/profile/__tests__/
-COPY services/profile/prisma ./services/profile/prisma/
 
 RUN apt-get update && apt-get install -y protobuf-compiler
 
@@ -32,7 +31,7 @@ FROM base AS deps
 RUN pnpm fetch
 RUN pnpm install --offline --frozen-lockfile
 
-RUN mkdir -p ./services/profile/src/grpc/generated
+RUN mkdir -p ./services/profile/src/infrastructure/grpc/generated
 RUN pnpm --filter profile proto:generate
 
 RUN pnpm --filter profile prisma:generate
