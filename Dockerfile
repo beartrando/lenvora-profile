@@ -31,7 +31,7 @@ FROM base AS deps
 RUN pnpm fetch
 RUN pnpm install --offline --frozen-lockfile
 
-RUN mkdir -p ./services/profile/src/infrastructure/grpc/generated
+RUN mkdir -p ./services/profile/src/contracts/proto
 RUN pnpm --filter profile proto:generate
 
 RUN pnpm --filter profile prisma:generate
@@ -61,6 +61,7 @@ ENV NODE_ENV=production
 
 RUN pnpm --filter @shared/logger build
 RUN pnpm --filter @shared/grpc-client-manager build
+RUN pnpm --filter @shared/errors build
 RUN pnpm --filter @shared/kafka-manager build
 RUN pnpm --filter @shared/pg-boss-manager build
 
@@ -108,4 +109,5 @@ RUN printf "%s\n" "$VERSION" > VERSION
 LABEL org.opencontainers.image.version="$VERSION"
 
 WORKDIR /usr/src/app/services/profile
-CMD ["npx", "prisma", "migrate", "deploy", "--schema=prisma/schema.prisma"]
+
+CMD ["npx", "prisma", "migrate", "deploy", "--schema=src/infrastructure/db/prisma/schema.prisma"]

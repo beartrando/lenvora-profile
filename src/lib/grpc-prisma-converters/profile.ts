@@ -1,8 +1,8 @@
-import * as profileGrpc from "../../grpc/generated/profile";
+import * as profileProto from "../../grpc/generated/profile";
 
 import type {Profile} from "@prisma/client";
 
-export function profileToGrpc(profile: Profile): profileGrpc.ProfileObject {
+export function profileToProto(profile: Profile): profileProto.ProfileObject {
 
     return {
         id: profile.id,
@@ -16,7 +16,7 @@ export function profileToGrpc(profile: Profile): profileGrpc.ProfileObject {
     };
 }
 
-export function profileToPrisma(profile: profileGrpc.ProfileObject): Profile {
+export function profileToPrisma(profile: profileProto.ProfileObject): Profile {
     return {
         id: profile.id,
         userId: profile.userId,

@@ -1,21 +1,21 @@
 import * as grpc from '@grpc/grpc-js';
-import * as authGrpc from '../generated/auth';
-import * as profileGrpc from '../generated/profile';
+import * as authProto from '../generated/auth';
+import * as profileProto from '../generated/profile';
 import * as profileService from '../../services/profile.service';
 import logger from "@shared/logger";
-import {profileToGrpc} from "../../lib/grpc-prisma-converters/profile";
-import {getUserIdFromGrpcRequest, getUserIdFromJwt} from "../../lib/grpcRequestMetadata";
+import {profileToProto} from "../../lib/grpc-prisma-converters/profile";
+import {getUserIdFromProtoRequest, getUserIdFromJwt} from "../../lib/grpcRequestMetadata";
 
 export const upsert = async (
-    call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
-    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+    call: grpc.ServerUnaryCall<authProto.UserIdRequest, profileProto.ProfileObject>,
+    callback: grpc.sendUnaryData<profileProto.ProfileObject>
 ) => {
-    const userId = getUserIdFromGrpcRequest(call);
+    const userId = getUserIdFromProtoRequest(call);
 
     try {
         const result = await profileService.upsert(userId);
 
-        callback(null, profileToGrpc(result));
+        callback(null, profileToProto(result));
 
     } catch (err: any) {
         logger.error(err);
@@ -27,8 +27,8 @@ export const upsert = async (
 };
 
 export const get = async (
-    call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, profileGrpc.ProfileObject>,
-    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+    call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, profileProto.ProfileObject>,
+    callback: grpc.sendUnaryData<profileProto.ProfileObject>
 ) => {
     const {profileId} = call.request;
 
@@ -40,7 +40,7 @@ export const get = async (
             throw new Error("Expected result, but got null");
         }
 
-        callback(null, profileToGrpc(result));
+        callback(null, profileToProto(result));
 
     } catch (err: any) {
         logger.log(err);
@@ -52,11 +52,11 @@ export const get = async (
 };
 
 export const getMe = async (
-    call: grpc.ServerUnaryCall<profileGrpc.ProfileIdRequest, profileGrpc.ProfileObject>,
-    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+    call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, profileProto.ProfileObject>,
+    callback: grpc.sendUnaryData<profileProto.ProfileObject>
 ) => {
     // logger.log(call);
-    const userId = getUserIdFromGrpcRequest(call);
+    const userId = getUserIdFromProtoRequest(call);
 
     try {
 
@@ -67,7 +67,7 @@ export const getMe = async (
             throw new Error("Expected result, but got null");
         }
 
-        callback(null, profileToGrpc(result));
+        callback(null, profileToProto(result));
 
     } catch (err: any) {
         logger.log(err);
@@ -80,8 +80,8 @@ export const getMe = async (
 
 
 export const getByUser = async (
-    call: grpc.ServerUnaryCall<authGrpc.UserIdRequest, profileGrpc.ProfileObject>,
-    callback: grpc.sendUnaryData<profileGrpc.ProfileObject>
+    call: grpc.ServerUnaryCall<authProto.UserIdRequest, profileProto.ProfileObject>,
+    callback: grpc.sendUnaryData<profileProto.ProfileObject>
 ) => {
     const {userId} = call.request;
 
@@ -93,7 +93,7 @@ export const getByUser = async (
             throw new Error("Expected result, but got null");
         }
 
-        callback(null, profileToGrpc(result));
+        callback(null, profileToProto(result));
 
     } catch (err: any) {
         logger.log(err);
