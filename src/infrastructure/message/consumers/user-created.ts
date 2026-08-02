@@ -1,4 +1,4 @@
-import {UserObject} from "../grpc/generated/auth";
+import {UserObject} from "../../../contracts/proto/auth";
 
 export async function userCreated(topic: string, partition: number, message: UserObject): Promise<void> {
     // try {
