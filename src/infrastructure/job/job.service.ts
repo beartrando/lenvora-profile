@@ -8,8 +8,8 @@ import {KafkaConfig} from "@shared/kafka-manager";
 export class JobService {
 
     constructor(
-        private readonly kafkaConfig: KafkaConfig,
-        private readonly kafkaProducersConfig: Record<string, string>,
+        private readonly messageConfig: KafkaConfig,
+        private readonly messageProducersConfig: Record<string, string>,
     ) {
     }
 
@@ -23,14 +23,14 @@ export class JobService {
     }
 
     async initKafkaBridge(): Promise<void> {
-        const topics = Object.values(this.kafkaProducersConfig);
+        const topics = Object.values(this.messageProducersConfig);
 
         while (true) {
             try {
                 await Promise.all(
                     topics.map(topic =>
                         pgBossManager.kafka.start(
-                            this.kafkaConfig,
+                            this.messageConfig,
                             topic,
                         ),
                     ),

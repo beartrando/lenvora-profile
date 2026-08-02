@@ -6,7 +6,7 @@ import HealthHandler from "../infrastructure/grpc/handlers/health.handler";
 import GrpcService from "../infrastructure/grpc/grpc.service";
 import {config as grpcConfig} from "../infrastructure/grpc/config";
 import Application from "../application/application";
-import {config as kafkaConfig, kafkaConsumersConfig, kafkaProducersConfig} from "../infrastructure/message/config";
+import {config as messageConfig, messageConsumersConfig, messageProducersConfig} from "../infrastructure/message/config";
 import AuthService from "../infrastructure/auth/auth-service";
 import MessageService from "../infrastructure/message/message.service";
 import JobService from "../infrastructure/job/job.service";
@@ -24,19 +24,19 @@ function buildApplication() {
 
 
 
-    const jobService = new JobService(kafkaConfig, kafkaProducersConfig)
+    const jobService = new JobService(messageConfig, messageProducersConfig)
     const dbService = new DbService();
 
     const authService = new AuthService();
 
     const profileRepository = new PrismaProfileRepository(dbService.client);
 
-    const getOrCreateUseCase = new GetOrCreateUseCase(profileRepository, jobService, kafkaProducersConfig.profileCreated);
+    const getOrCreateUseCase = new GetOrCreateUseCase(profileRepository, jobService, messageProducersConfig.profileCreated);
 
 
     const userCreatedConsumer = new UserCreatedConsumer(getOrCreateUseCase);
 
-    const messageService = new MessageService(kafkaConfig, kafkaConsumersConfig, userCreatedConsumer);
+    const messageService = new MessageService(messageConfig, messageConsumersConfig, userCreatedConsumer);
 
     const getUseCase = new GetUseCase(profileRepository);
     const getByUserUseCase = new GetByUserUseCase(profileRepository);

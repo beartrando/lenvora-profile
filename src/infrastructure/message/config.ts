@@ -4,13 +4,13 @@ export const config = {
     groupId: process.env.KAFKA_GROUP_ID ?? 'profile-service',
 };
 
-export const kafkaConsumersConfig = {
-    userCreated: process.env.KAFKA_TOPIC_USER_CREATED ?? 'user.created',
+export const messageConsumersConfig = {
+    userCreated: process.env.MESSAGE_TOPIC_USER_CREATED ?? 'user.created',
 };
 
 
-export const kafkaProducersConfig = {
-    profileCreated: process.env.KAFKA_TOPIC_PROFILE_CREATED ?? 'profile.created',
+export const messageProducersConfig = {
+    profileCreated: process.env.MESSAGE_TOPIC_PROFILE_CREATED ?? 'profile.created',
 };
 
 

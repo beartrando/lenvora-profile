@@ -1,6 +1,6 @@
 import {createConsumer, createProducer, KafkaConfig, KafkaProducer} from "@shared/kafka-manager";
 import logger from "@shared/logger";
-import {kafkaConsumersConfig,} from './config';
+import {messageConsumersConfig,} from './config';
 import sleep from "../../utils/sleep";
 import UserCreatedConsumer from "./consumers/user-created";
 
@@ -49,7 +49,7 @@ export class MessageService {
 
     private async createConsumers(): Promise<void> {
         createConsumer(this.config, {
-            topic: kafkaConsumersConfig.userCreated,
+            topic: messageConsumersConfig.userCreated,
             handler: this.userCreatedConsumer.execute
         })
     }

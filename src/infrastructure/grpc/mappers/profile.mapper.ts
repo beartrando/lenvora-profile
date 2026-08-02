@@ -21,9 +21,9 @@ export class ProfileGrpcMapper {
         });
     }
 
-    // static toEntity(user: authProto.UserObject): ProfileEntity {
+    // static toEntity(user: authProto.UserObject): BattleEntity {
     //
-    //     return ProfileEntity.create({
+    //     return BattleEntity.create({
     //         id: new Id(user.id),
     //         email: user.email ? new Email(user.email) : null,
     //         googleId: user.googleId,
