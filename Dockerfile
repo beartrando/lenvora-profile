@@ -34,6 +34,9 @@ RUN pnpm install --offline --frozen-lockfile
 RUN mkdir -p ./services/profile/src/contracts/proto
 RUN pnpm --filter profile proto:generate
 
+RUN mkdir -p ./shared/errors/src/contracts/proto
+RUN pnpm --filter @shared/errors proto:generate
+
 RUN pnpm --filter profile prisma:generate
 
 # ---------- DEV ----------
@@ -110,4 +113,4 @@ LABEL org.opencontainers.image.version="$VERSION"
 
 WORKDIR /usr/src/app/services/profile
 
-CMD ["npx", "prisma", "migrate", "deploy", "--schema=src/infrastructure/db/prisma/schema.prisma"]
+CMD ["pnpm", "--filter", "orchestration", "migrate"]
