@@ -49,11 +49,10 @@ export class GrpcService {
 
     private registerProfileService() {
         this.server.addService(profileProto.ProfileService, {
-            getOrCreate: this.profileHandler.upsert,
+            getOrCreate: this.profileHandler.getOrCreate,
             get: this.profileHandler.get,
-            getByUser: this.profileHandler.upsert,
+            getByUser: this.profileHandler.getByUser,
             getMe: this.profileHandler.getMe,
-            // getByUser: this.profileHandler.getByUser,
         });
     }
 

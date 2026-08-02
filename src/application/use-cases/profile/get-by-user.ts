@@ -1,5 +1,6 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
 import ProfileEntity from "../../../domain/entities/profile.entity";
+import Id from "../../../domain/value-objects/id.vo";
 
 export class GetByUserUseCase {
     constructor(
