@@ -24,10 +24,10 @@ function buildGrpcService(dbService: DbService, messageService: MessageService, 
 
     const profileRepository = new PrismaProfileRepository(dbService.client);
 
-    const getOrCreate = new GetOrCreateUseCase(profileRepository, jobService, kafkaProducersConfig.userCreated);
+    const getOrCreate = new GetOrCreateUseCase(profileRepository, jobService, kafkaProducersConfig.profileCreated);
     const getUseCase = new GetUseCase(profileRepository);
     const getByUserUseCase = new GetByUserUseCase(profileRepository);
-    const getMeUseCase = new GetMeUseCase(profileRepository, authService);
+    const getMeUseCase = new GetMeUseCase(profileRepository);
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;

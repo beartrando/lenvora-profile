@@ -1,7 +1,6 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
 import ProfileEntity from "../../../domain/entities/profile.entity";
 import Id from "../../../domain/value-objects/id.vo";
-import AccessToken from "../../../domain/value-objects/access-token.vo";
 
 export class GetUseCase {
     constructor(
@@ -9,7 +8,7 @@ export class GetUseCase {
     ) {
     }
 
-    async execute(Id: Id, accessToken: AccessToken): Promise<ProfileEntity> {
+    async execute(Id: Id): Promise<ProfileEntity> {
         const profile = await this.profileRepository.findById(Id);
 
         if (!profile) {

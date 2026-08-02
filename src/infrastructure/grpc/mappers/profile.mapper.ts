@@ -1,6 +1,5 @@
 import * as authProto from "../../../contracts/proto/auth";
 import ProfileEntity from "../../../domain/entities/profile.entity";
-import Id from "../../../domain/value-objects/id.vo";
 
 export class ProfileGrpcMapper {
     static toGrpc(user: ProfileEntity): authProto.UserObject {

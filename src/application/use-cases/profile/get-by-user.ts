@@ -1,7 +1,5 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
 import ProfileEntity from "../../../domain/entities/profile.entity";
-import AuthService from "../../../infrastructure/auth/auth-service";
-import AccessToken from "../../../domain/value-objects/access-token.vo";
 
 export class GetByUserUseCase {
     constructor(
@@ -9,7 +7,7 @@ export class GetByUserUseCase {
     ) {
     }
 
-    async execute(userId: Id, accessToken: AccessToken): Promise<ProfileEntity> {
+    async execute(userId: Id): Promise<ProfileEntity> {
 
         const user = await this.profileRepository.findByUserId(userId);
 

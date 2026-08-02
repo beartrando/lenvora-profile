@@ -1,8 +1,6 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
 import ProfileEntity from "../../../domain/entities/profile.entity";
-import AccessToken from "../../../domain/value-objects/access-token.vo";
 import JobService from "../../../infrastructure/job/job.service";
-import jobService from "../../../infrastructure/job/job.service";
 
 export class GetOrCreateUseCase {
     constructor(
@@ -12,7 +10,7 @@ export class GetOrCreateUseCase {
     ) {
     }
 
-    async execute(userId: Id, accessToken: AccessToken): Promise<ProfileEntity> {
+    async execute(userId: Id): Promise<ProfileEntity> {
 
         const existing = await this.profileRepository.findById(userId);
 
@@ -25,7 +23,7 @@ export class GetOrCreateUseCase {
         await this.profileRepository.save(profile);
 
 
-        jobService.enqueue(profileCreatedTopik, profile);
+        this.jobService.enqueue(this.profileCreatedTopik, profile);
 
         return profile;
     }

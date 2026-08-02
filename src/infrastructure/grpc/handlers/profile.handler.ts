@@ -1,10 +1,7 @@
 import * as grpc from '@grpc/grpc-js';
 import * as authProto from '../../../contracts/proto/auth';
 import * as profileProto from '../../../contracts/proto/profile';
-// import * as profileService from '../../application/use-cases/profile/profile.service';
 import logger from "@shared/logger";
-// import {profileToProto} from "../../infrastructure/message/lib/grpc-prisma-converters/profile";
-// import {getUserIdFromProtoRequest} from "../../infrastructure/message/lib/grpcRequestMetadata";
 import GetMeUseCase from "../../../application/use-cases/profile/get-me";
 import GetUseCase from "../../../application/use-cases/profile/get";
 import callbackError from "./callback.error";
@@ -13,6 +10,8 @@ import AuthHelper from "../helpers/auth.helper";
 import GetOrCreateUseCase from "../../../application/use-cases/profile/get-or-create";
 import GetByUserUseCase from "../../../application/use-cases/profile/get-by-user";
 import ProfileGrpcMapper from "../mappers/profile.mapper";
+import Id from "../../../domain/value-objects/id.vo";
+import {NotFoundError} from "@shared/errors";
 
 
 export class ProfileHandler {
@@ -32,7 +31,9 @@ export class ProfileHandler {
         try {
             const accessToken = AuthHelper.getAccessToken(call);
 
-            const profile = await this.getOrCreateUseCase.execute(accessToken);
+            const userId = this.authService.verifyAccessToken(accessToken);
+
+            const profile = await this.getOrCreateUseCase.execute(userId);
 
             const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
 
@@ -50,81 +51,73 @@ export class ProfileHandler {
     ) {
         try {
             const {profileId} = call.request;
-            const accessToken = AuthHelper.getAccessToken(call);
             // logger.log('getProfileById ' + profileId);
 
-            const profile = await this.getUseCase.execute(profileId, accessToken);
+            const profile = await this.getUseCase.execute(new Id(profileId));
 
             const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
 
-
-            const result = await profileService.get(profileId);
-
             if (!result) {
-                throw new Error("Expected result, but got null");
+                throw new NotFoundError('Profile');
             }
 
-            callback(null, profileToProto(result));
+            callback(null, result);
 
         } catch (err: any) {
             logger.log(err);
-            callback({
-                code: grpc.status.INTERNAL,
-                message: err.message,
-            }, null);
+            callbackError(callback, err);
         }
     }
 
     async getMe(
-        call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, profileProto.ProfileObject>,
-        callback: grpc.sendUnaryData<profileProto.ProfileObject>
+        call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, profileProto.ProfileResponse>,
+        callback: grpc.sendUnaryData<profileProto.ProfileResponse>
     ) {
-        // logger.log(call);
-        const userId = getUserIdFromProtoRequest(call);
 
         try {
+            const accessToken = AuthHelper.getAccessToken(call);
 
-            logger.log(userId);
-            const result = await profileService.getByUser(userId);
+            const userId = this.authService.verifyAccessToken(accessToken);
+
+            const profile = await this.getMeUseCase.execute(userId);
+
+            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
 
             if (!result) {
-                throw new Error("Expected result, but got null");
+                throw new NotFoundError('Profile');
             }
 
-            callback(null, profileToProto(result));
+            callback(null, result);
 
         } catch (err: any) {
             logger.log(err);
-            callback({
-                code: grpc.status.INTERNAL,
-                message: err.message,
-            }, null);
+            callbackError(callback, err);
         }
     }
 
 
     async getByUser(
-        call: grpc.ServerUnaryCall<authProto.UserIdRequest, profileProto.ProfileObject>,
-        callback: grpc.sendUnaryData<profileProto.ProfileObject>
+        call: grpc.ServerUnaryCall<authProto.UserIdRequest, profileProto.ProfileResponse>,
+        callback: grpc.sendUnaryData<profileProto.ProfileResponse>
     ) {
-        const {userId} = call.request;
 
         try {
-            // logger.log('getProfileByUser ' + userId);
-            const result = await profileService.getByUser(userId);
+
+            const {userId} = call.request;
+
+            const profile = await this.getByUserUseCase.execute(new Id(userId));
+
+            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
 
             if (!result) {
-                throw new Error("Expected result, but got null");
+                throw new NotFoundError('Profile');
             }
 
-            callback(null, profileToProto(result));
+            callback(null, result);
 
         } catch (err: any) {
             logger.log(err);
-            callback({
-                code: grpc.status.INTERNAL,
-                message: err.message,
-            }, null);
+            callbackError(callback, err);
         }
     }
 }
