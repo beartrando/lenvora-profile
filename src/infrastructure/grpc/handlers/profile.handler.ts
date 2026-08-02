@@ -35,6 +35,11 @@ export class ProfileHandler {
 
             const profile = await this.getOrCreateUseCase.execute(userId);
 
+
+
+
+
+
             const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
 
             callback(null, result);
