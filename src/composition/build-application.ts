@@ -18,13 +18,14 @@ import ProfileHandler from "../infrastructure/grpc/handlers/profile.handler";
 import GetUseCase from "../application/use-cases/profile/get";
 import GetMeUseCase from "../application/use-cases/profile/get-me";
 import UserCreatedConsumer from "../infrastructure/message/consumers/user-created";
+import {config as jobConfig} from "../infrastructure/job/config";
 
 
 function buildApplication() {
 
 
 
-    const jobService = new JobService(messageConfig, messageProducersConfig)
+    const jobService = new JobService(jobConfig, messageConfig, messageProducersConfig)
     const dbService = new DbService();
 
     const authService = new AuthService();
