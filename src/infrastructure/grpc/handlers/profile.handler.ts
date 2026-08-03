@@ -9,7 +9,7 @@ import AuthService from "../../auth/auth-service";
 import AuthHelper from "../helpers/auth.helper";
 import GetOrCreateUseCase from "../../../application/use-cases/profile/get-or-create";
 import GetByUserUseCase from "../../../application/use-cases/profile/get-by-user";
-import ProfileGrpcMapper from "../mappers/profile.mapper";
+import ProfileProtoMapper from "../mappers/profile.proto.mapper";
 import Id from "../../../domain/value-objects/id.vo";
 import {NotFoundError} from "@shared/errors";
 
@@ -40,7 +40,7 @@ export class ProfileHandler {
 
 
 
-            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
+            const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
 
             callback(null, result);
 
@@ -60,7 +60,7 @@ export class ProfileHandler {
 
             const profile = await this.getUseCase.execute(new Id(profileId));
 
-            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
+            const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
 
             if (!result) {
                 throw new NotFoundError('Profile');
@@ -86,7 +86,7 @@ export class ProfileHandler {
 
             const profile = await this.getMeUseCase.execute(userId);
 
-            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
+            const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
 
             if (!result) {
                 throw new NotFoundError('Profile');
@@ -112,7 +112,7 @@ export class ProfileHandler {
 
             const profile = await this.getByUserUseCase.execute(new Id(userId));
 
-            const result = profileProto.ProfileResponse.create({profile: ProfileGrpcMapper.toGrpc(profile)});
+            const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
 
             if (!result) {
                 throw new NotFoundError('Profile');

@@ -6,8 +6,8 @@ import Level from "../../../domain/value-objects/level.vo";
 import Rating from "../../../domain/value-objects/rating.vo";
 import Experience from "../../../domain/value-objects/experience.vo";
 
-export class ProfileGrpcMapper {
-    static toGrpc(profile: ProfileEntity): profileProto.ProfileObject {
+export class ProfileProtoMapper {
+    static toProto(profile: ProfileEntity): profileProto.ProfileObject {
 
         return profileProto.ProfileObject.create({
             id: profile.id.value,
@@ -36,4 +36,4 @@ export class ProfileGrpcMapper {
 
 }
 
-export default ProfileGrpcMapper;
+export default ProfileProtoMapper;
