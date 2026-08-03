@@ -23,7 +23,7 @@ export class ProfileDbMapper {
         };
     }
 
-    static toEntity(profile: Profile): ProfileEntity {
+    static toDomain(profile: Profile): ProfileEntity {
         return new ProfileEntity(
             new Id(profile.id),
             new Id(profile.userId),

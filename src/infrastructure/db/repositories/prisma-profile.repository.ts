@@ -27,7 +27,7 @@ export class PrismaProfileRepository implements ProfileRepository {
             return null;
         }
 
-        return ProfileDbMapper.toEntity(profile);
+        return ProfileDbMapper.toDomain(profile);
     }
 
     async save(
@@ -51,7 +51,7 @@ export class PrismaProfileRepository implements ProfileRepository {
             update,
         });
 
-        return ProfileDbMapper.toEntity(result);
+        return ProfileDbMapper.toDomain(result);
     }
 
     async findByUserId(
@@ -67,7 +67,7 @@ export class PrismaProfileRepository implements ProfileRepository {
             return null;
         }
 
-        return ProfileDbMapper.toEntity(profile);
+        return ProfileDbMapper.toDomain(profile);
     }
 }
 

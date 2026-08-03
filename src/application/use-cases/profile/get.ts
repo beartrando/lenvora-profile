@@ -8,8 +8,8 @@ export class GetUseCase {
     ) {
     }
 
-    async execute(Id: Id): Promise<ProfileEntity> {
-        const profile = await this.profileRepository.findById(Id);
+    async execute(id: Id): Promise<ProfileEntity> {
+        const profile = await this.profileRepository.findById(id);
 
         if (!profile) {
             throw new Error("Profile does not exist");
