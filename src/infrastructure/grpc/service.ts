@@ -52,7 +52,6 @@ export class GrpcService {
             getOrCreate: this.profileHandler.getOrCreate,
             get: this.profileHandler.get,
             getByUser: this.profileHandler.getByUser,
-            getMe: this.profileHandler.getMe,
         });
     }
 

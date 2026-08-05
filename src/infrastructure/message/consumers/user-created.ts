@@ -6,7 +6,8 @@ import logger from "@shared/logger";
 export class UserCreatedConsumer {
     constructor(
         private readonly getOrCreateUseCase: GetOrCreateUseCase,
-    ) {}
+    ) {
+    }
 
     async execute(topic: string, partition: number, message: UserObject): Promise<void> {
         try {

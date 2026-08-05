@@ -1,10 +1,5 @@
 import * as profileProto from "../../../contracts/proto/profile";
 import ProfileEntity from "../../../domain/entities/profile.entity";
-import Id from "../../../domain/value-objects/id.vo";
-import Nickname from "../../../domain/value-objects/nickname.vo";
-import Level from "../../../domain/value-objects/level.vo";
-import Rating from "../../../domain/value-objects/rating.vo";
-import Experience from "../../../domain/value-objects/experience.vo";
 
 export class ProfileProtoMapper {
     static toProto(profile: ProfileEntity): profileProto.ProfileObject {
@@ -24,7 +19,7 @@ export class ProfileProtoMapper {
     // static toDomain(user: authProto.UserObject): BattleEntity {
     //
     //     return BattleEntity.create({
-    //         id: new Id(user.id),
+    //         id: new DeviceId(user.id),
     //         email: user.email ? new Email(user.email) : null,
     //         googleId: user.googleId,
     //         lastLoginAt: user.lastLoginAt,

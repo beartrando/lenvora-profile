@@ -6,7 +6,11 @@ import HealthHandler from "../infrastructure/grpc/handlers/health.handler";
 import GrpcService from "../infrastructure/grpc/service";
 import {config as grpcConfig} from "../infrastructure/grpc/config";
 import Application from "../application/application";
-import {config as messageConfig, messageConsumersConfig, messageProducersConfig} from "../infrastructure/message/config";
+import {
+    config as messageConfig,
+    messageConsumersConfig,
+    messageProducersConfig
+} from "../infrastructure/message/config";
 import AuthService from "../infrastructure/auth/service";
 import MessageService from "../infrastructure/message/service";
 import JobService from "../infrastructure/job/service";
@@ -16,7 +20,6 @@ import GetOrCreateUseCase from "../application/use-cases/profile/get-or-create";
 import GetByUserUseCase from "../application/use-cases/profile/get-by-user";
 import ProfileHandler from "../infrastructure/grpc/handlers/profile.handler";
 import GetUseCase from "../application/use-cases/profile/get";
-import GetMeUseCase from "../application/use-cases/profile/get-me";
 import UserCreatedConsumer from "../infrastructure/message/consumers/user-created";
 import {config as jobConfig} from "../infrastructure/job/config";
 import {config as authConfig} from "../infrastructure/auth/config";
@@ -38,14 +41,13 @@ function buildApplication() {
 
     const getUseCase = new GetUseCase(profileRepository);
     const getByUserUseCase = new GetByUserUseCase(profileRepository);
-    const getMeUseCase = new GetMeUseCase(profileRepository);
 
     const healthUseCase = new HealthUseCase(dbService, messageService, jobService);
     const statusUseCase = new StatusUseCase;
     const livezUseCase = new LivezUseCase;
     const readyzUseCase = new ReadyzUseCase;
 
-    const profileHandler = new ProfileHandler(authService, getOrCreateUseCase, getByUserUseCase, getMeUseCase, getUseCase);
+    const profileHandler = new ProfileHandler(authService, getOrCreateUseCase, getByUserUseCase, getUseCase);
     const healthHandler = new HealthHandler(healthUseCase, statusUseCase, livezUseCase, readyzUseCase);
 
     const grpcService = new GrpcService(grpcConfig.port, profileHandler, healthHandler);

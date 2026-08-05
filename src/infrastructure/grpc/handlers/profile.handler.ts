@@ -2,7 +2,6 @@ import * as grpc from '@grpc/grpc-js';
 import * as authProto from '../../../contracts/proto/auth';
 import * as profileProto from '../../../contracts/proto/profile';
 import logger from "@shared/logger";
-import GetMeUseCase from "../../../application/use-cases/profile/get-me";
 import GetUseCase from "../../../application/use-cases/profile/get";
 import callbackError from "./callback.error";
 import AuthService from "../../auth/service";
@@ -19,7 +18,6 @@ export class ProfileHandler {
         private readonly authService: AuthService,
         private readonly getOrCreateUseCase: GetOrCreateUseCase,
         private readonly getByUserUseCase: GetByUserUseCase,
-        private readonly getMeUseCase: GetMeUseCase,
         private readonly getUseCase: GetUseCase
     ) {
     }
@@ -34,10 +32,6 @@ export class ProfileHandler {
             const userId = this.authService.verifyAccessToken(accessToken);
 
             const profile = await this.getOrCreateUseCase.execute(userId);
-
-
-
-
 
 
             const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
@@ -73,33 +67,6 @@ export class ProfileHandler {
             callbackError(callback, err);
         }
     }
-
-    async getMe(
-        call: grpc.ServerUnaryCall<profileProto.ProfileIdRequest, profileProto.ProfileResponse>,
-        callback: grpc.sendUnaryData<profileProto.ProfileResponse>
-    ) {
-
-        try {
-            const accessToken = AuthHelper.getAccessToken(call);
-
-            const userId = this.authService.verifyAccessToken(accessToken);
-
-            const profile = await this.getMeUseCase.execute(userId);
-
-            const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
-
-            if (!result) {
-                throw new NotFoundError('Profile');
-            }
-
-            callback(null, result);
-
-        } catch (err: any) {
-            logger.log(err);
-            callbackError(callback, err);
-        }
-    }
-
 
     async getByUser(
         call: grpc.ServerUnaryCall<authProto.UserIdRequest, profileProto.ProfileResponse>,
