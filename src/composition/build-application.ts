@@ -19,16 +19,13 @@ import GetUseCase from "../application/use-cases/profile/get";
 import GetMeUseCase from "../application/use-cases/profile/get-me";
 import UserCreatedConsumer from "../infrastructure/message/consumers/user-created";
 import {config as jobConfig} from "../infrastructure/job/config";
-
+import {config as authConfig} from "../infrastructure/auth/config";
 
 function buildApplication() {
-
-
+    const authService = new AuthService(authConfig);
 
     const jobService = new JobService(jobConfig, messageConfig, messageProducersConfig)
     const dbService = new DbService();
-
-    const authService = new AuthService();
 
     const profileRepository = new PrismaProfileRepository(dbService.client);
 

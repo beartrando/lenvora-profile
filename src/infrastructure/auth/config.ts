@@ -7,7 +7,7 @@ function required(name: string): string {
 }
 
 export const config = {
-    jwtAccessSecret: required("JWT_ACCESS_SECRET"),
+    accessSecret: required("ACCESS_SECRET"),
 };
 
 export default config;
