@@ -4,13 +4,11 @@ import LivezUseCase from "../application/use-cases/health/livez";
 import ReadyzUseCase from "../application/use-cases/health/readyz";
 import HealthHandler from "../infrastructure/grpc/handlers/health.handler";
 import GrpcService from "../infrastructure/grpc/service";
-import {config as grpcConfig} from "../infrastructure/grpc/config";
+import grpcConfig from "../infrastructure/grpc/config";
+import {messageConfig, messageConsumersConfig, messageProducersConfig} from "../infrastructure/message/config";
+import jobConfig from "../infrastructure/job/config";
+import authConfig from "../infrastructure/auth/config";
 import Application from "../application/application";
-import {
-    config as messageConfig,
-    messageConsumersConfig,
-    messageProducersConfig
-} from "../infrastructure/message/config";
 import AuthService from "../infrastructure/auth/service";
 import MessageService from "../infrastructure/message/service";
 import JobService from "../infrastructure/job/service";
@@ -21,8 +19,6 @@ import GetByUserUseCase from "../application/use-cases/profile/get-by-user";
 import ProfileHandler from "../infrastructure/grpc/handlers/profile.handler";
 import GetUseCase from "../application/use-cases/profile/get";
 import UserCreatedConsumer from "../infrastructure/message/consumers/user-created";
-import {config as jobConfig} from "../infrastructure/job/config";
-import {config as authConfig} from "../infrastructure/auth/config";
 
 function buildApplication() {
     const authService = new AuthService(authConfig);
