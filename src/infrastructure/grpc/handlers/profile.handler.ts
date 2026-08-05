@@ -5,7 +5,7 @@ import logger from "@shared/logger";
 import GetMeUseCase from "../../../application/use-cases/profile/get-me";
 import GetUseCase from "../../../application/use-cases/profile/get";
 import callbackError from "./callback.error";
-import AuthService from "../../auth/auth-service";
+import AuthService from "../../auth/service";
 import AuthHelper from "../helpers/auth.helper";
 import GetOrCreateUseCase from "../../../application/use-cases/profile/get-or-create";
 import GetByUserUseCase from "../../../application/use-cases/profile/get-by-user";

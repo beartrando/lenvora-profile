@@ -1,6 +1,6 @@
 import ProfileRepository from "../../../domain/repositories/profile.repository";
 import ProfileEntity from "../../../domain/entities/profile.entity";
-import JobService from "../../../infrastructure/job/job.service";
+import JobService from "../../../infrastructure/job/service";
 import Id from "../../../domain/value-objects/id.vo";
 
 export class GetOrCreateUseCase {
