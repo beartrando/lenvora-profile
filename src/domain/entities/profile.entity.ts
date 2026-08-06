@@ -1,8 +1,8 @@
 import Id from "../value-objects/id.vo";
-import Nickname from "../value-objects/nickname.vo";
-import Level from "../value-objects/level.vo";
-import Rating from "../value-objects/rating.vo";
-import Experience from "../value-objects/experience.vo";
+import Nickname from "../value-objects/profile/nickname.vo";
+import Level from "../value-objects/profile/level.vo";
+import Rating from "../value-objects/profile/rating.vo";
+import Experience from "../value-objects/profile/experience.vo";
 
 type ProfileEntityProps = {
     id?: Id;

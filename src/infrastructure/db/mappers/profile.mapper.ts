@@ -1,10 +1,10 @@
 import {Profile} from "@prisma/client";
 import ProfileEntity from "../../../domain/entities/profile.entity";
 import Id from "../../../domain/value-objects/id.vo";
-import Nickname from "../../../domain/value-objects/nickname.vo";
-import Level from "../../../domain/value-objects/level.vo";
-import Rating from "../../../domain/value-objects/rating.vo";
-import Experience from "../../../domain/value-objects/experience.vo";
+import Nickname from "../../../domain/value-objects/profile/nickname.vo";
+import Level from "../../../domain/value-objects/profile/level.vo";
+import Rating from "../../../domain/value-objects/profile/rating.vo";
+import Experience from "../../../domain/value-objects/profile/experience.vo";
 
 type ProfileSaveData = Omit<
     Profile,
