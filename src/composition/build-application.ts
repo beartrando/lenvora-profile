@@ -5,7 +5,6 @@ import ReadyzUseCase from "../application/use-cases/health/readyz";
 import HealthHandler from "../infrastructure/grpc/handlers/health.handler";
 import GrpcService from "../infrastructure/grpc/service";
 import grpcConfig from "../infrastructure/grpc/config";
-import {messageConfig, messageConsumersConfig, messageProducersConfig} from "../infrastructure/message/config";
 import jobConfig from "../infrastructure/job/config";
 import authConfig from "../infrastructure/auth/config";
 import Application from "../application/application";
@@ -19,6 +18,9 @@ import GetByUserUseCase from "../application/use-cases/profile/get-by-user";
 import ProfileHandler from "../infrastructure/grpc/handlers/profile.handler";
 import GetUseCase from "../application/use-cases/profile/get";
 import UserCreatedConsumer from "../infrastructure/message/consumers/user-created";
+import messageConfig from "../infrastructure/message/configs/message.config";
+import messageProducersConfig from "../infrastructure/message/configs/producers.config";
+import messageConsumersConfig from "../infrastructure/message/configs/consumers.config";
 
 function buildApplication() {
     const authService = new AuthService(authConfig);
@@ -33,7 +35,7 @@ function buildApplication() {
 
     const userCreatedConsumer = new UserCreatedConsumer(getOrCreateUseCase);
 
-    const messageService = new MessageService(messageConfig, messageConsumersConfig);
+    const messageService = new MessageService(messageConfig);
 
     messageService.addConsumer(
         messageConsumersConfig.userCreated,
