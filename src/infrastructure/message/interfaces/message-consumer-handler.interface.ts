@@ -1,5 +1,5 @@
 export interface MessageConsumerHandlerInterface {
-    (topic: string, partition: number, message: UserObject): Promise<void>;
+    (topic: string, partition: number, message: undefined): Promise<void>;
 }
 
 export default MessageConsumerHandlerInterface;
