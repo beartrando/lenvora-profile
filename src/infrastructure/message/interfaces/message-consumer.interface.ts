@@ -1,8 +1,8 @@
 import MessageConsumerHandlerInterface from "./message-consumer-handler.interface";
 
-export interface MessageConsumerInterface {
+export interface MessageConsumerInterface<TMessage> {
     topic: string;
-    handler: MessageConsumerHandlerInterface;
+    handler: MessageConsumerHandlerInterface<TMessage>;
 }
 
 export default MessageConsumerInterface;

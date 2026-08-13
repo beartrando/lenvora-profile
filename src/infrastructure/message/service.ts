@@ -7,7 +7,7 @@ import MessageConsumerInterface from "./interfaces/message-consumer.interface";
 export class MessageService {
 
     private producer?: KafkaProducer;
-    private readonly consumers: MessageConsumerInterface[] = [];
+    private readonly consumers: MessageConsumerInterface<any>[] = [];
 
     constructor(
         private readonly config: KafkaConfig,
@@ -47,8 +47,8 @@ export class MessageService {
         }
     }
 
-    addConsumer(topic: string, handler: MessageConsumerHandlerInterface): void {
-        const consumer: MessageConsumerInterface = {topic, handler};
+    addConsumer(topic: string, handler: MessageConsumerHandlerInterface<any>): void {
+        const consumer: MessageConsumerInterface<any> = {topic, handler};
         this.consumers.push(consumer);
     }
 

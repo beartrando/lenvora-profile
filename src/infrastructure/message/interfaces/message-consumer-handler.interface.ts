@@ -1,5 +1,9 @@
-export interface MessageConsumerHandlerInterface {
-    (topic: string, partition: number, message: undefined): Promise<void>;
+export interface MessageConsumerHandlerInterface<TMessage> {
+    (
+        topic: string,
+        partition: number,
+        message: TMessage,
+    ): Promise<void>;
 }
 
 export default MessageConsumerHandlerInterface;
