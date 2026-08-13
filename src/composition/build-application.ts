@@ -33,7 +33,12 @@ function buildApplication() {
 
     const userCreatedConsumer = new UserCreatedConsumer(getOrCreateUseCase);
 
-    const messageService = new MessageService(messageConfig, messageConsumersConfig, userCreatedConsumer);
+    const messageService = new MessageService(messageConfig, messageConsumersConfig);
+
+    messageService.addConsumer(
+        messageConsumersConfig.userCreated,
+        userCreatedConsumer.execute
+    )
 
     const getUseCase = new GetUseCase(profileRepository);
     const getByUserUseCase = new GetByUserUseCase(profileRepository);

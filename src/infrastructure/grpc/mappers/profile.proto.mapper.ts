@@ -16,9 +16,9 @@ export class ProfileProtoMapper {
         });
     }
 
-    // static toDomain(user: authProto.UserObject): BattleEntity {
+    // static toDomain(user: authProto.UserObject): DeviceEntity {
     //
-    //     return BattleEntity.create({
+    //     return DeviceEntity.create({
     //         id: new DeviceId(user.id),
     //         email: user.email ? new Email(user.email) : null,
     //         googleId: user.googleId,
