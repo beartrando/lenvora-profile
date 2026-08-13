@@ -2,8 +2,9 @@ import {UserObject} from "../../../contracts/proto/auth";
 import Id from "../../../domain/value-objects/id.vo";
 import GetOrCreateUseCase from "../../../application/use-cases/profile/get-or-create";
 import logger from "@shared/logger";
+import UseCaseInterface from "../interfaces/use-case.interface";
 
-export class UserCreatedConsumer {
+export class UserCreatedConsumer implements UseCaseInterface<UserObject> {
     constructor(
         private readonly getOrCreateUseCase: GetOrCreateUseCase,
     ) {
