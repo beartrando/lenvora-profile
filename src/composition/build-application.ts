@@ -39,7 +39,7 @@ function buildApplication() {
 
     messageService.addConsumer(
         messageConsumersConfig.userCreated,
-        userCreatedConsumer.execute
+        userCreatedConsumer.execute.bind(userCreatedConsumer)
     )
 
     const getUseCase = new GetUseCase(profileRepository);
