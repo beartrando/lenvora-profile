@@ -16,10 +16,10 @@ export class ProfileProtoMapper {
         });
     }
 
-    // static toDomain(user: authProto.UserObject): DeviceEntity {
+    // static toDomain(user: authProto.UserObject): ProfileEntity {
     //
-    //     return DeviceEntity.create({
-    //         id: new DeviceId(user.id),
+    //     return ProfileEntity.create({
+    //         id: new ProfileId(user.id),
     //         email: user.email ? new Email(user.email) : null,
     //         googleId: user.googleId,
     //         lastLoginAt: user.lastLoginAt,
