@@ -4,15 +4,10 @@ import AccessToken from "../../domain/value-objects/access-token.vo";
 
 import TokenService from "../../application/ports/token-service.port";
 import Id from "../../domain/value-objects/id.vo";
+import AuthConfig from "./interfaces/auth-config";
+import TokenPayload from "./interfaces/token-payload";
 
 
-interface TokenPayload extends JwtPayload {
-    sub: string;
-}
-
-export interface AuthConfig {
-    accessSecret: jwt.Secret;
-}
 
 export class AuthService implements TokenService {
     constructor(private readonly config: AuthConfig) {
