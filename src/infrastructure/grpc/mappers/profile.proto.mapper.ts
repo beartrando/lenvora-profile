@@ -1,5 +1,11 @@
 import * as profileProto from "../../../contracts/proto/profile";
-import ProfileEntity from "../../../domain/entities/profile.entity";
+import ProfileEntity from "../../../domain/profile/profile.entity";
+import Id from "../../../domain/common/value-objects/id.vo";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
+import Nickname from "../../../domain/profile/value-objects/nickname.vo";
+import Level from "../../../domain/profile/value-objects/level.vo";
+import Rating from "../../../domain/profile/value-objects/rating.vo";
+import Experience from "../../../domain/profile/value-objects/experience.vo";
 
 export class ProfileProtoMapper {
     static toProto(profile: ProfileEntity): profileProto.ProfileObject {
@@ -16,18 +22,19 @@ export class ProfileProtoMapper {
         });
     }
 
-    // static toDomain(user: authProto.UserObject): ProfileEntity {
-    //
-    //     return ProfileEntity.create({
-    //         id: new ProfileId(user.id),
-    //         email: user.email ? new Email(user.email) : null,
-    //         googleId: user.googleId,
-    //         lastLoginAt: user.lastLoginAt,
-    //         lastActiveAt: user.lastActiveAt,
-    //         createdAt: user.createdAt,
-    //         updatedAt: user.updatedAt,
-    //     });
-    // }
+    static toDomain(profile: profileProto.ProfileObject): ProfileEntity {
+
+        return ProfileEntity.create({
+            id: new ProfileId(profile.id),
+            userId: new Id(profile.userId),
+            nickname: new Nickname(profile.nickname),
+            level: new Level(profile.level),
+            rating: new Rating(profile.rating),
+            experience: new Experience(profile.experience),
+            createdAt: profile.createdAt,
+            updatedAt: profile.updatedAt,
+        });
+    }
 
 }
 

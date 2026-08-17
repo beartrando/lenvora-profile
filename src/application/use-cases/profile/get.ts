@@ -1,6 +1,6 @@
-import ProfileRepository from "../../../domain/repositories/profile.repository";
-import ProfileEntity from "../../../domain/entities/profile.entity";
-import Id from "../../../domain/value-objects/id.vo";
+import ProfileRepository from "../../../domain/profile/profile.repository";
+import ProfileEntity from "../../../domain/profile/profile.entity";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
 
 export class GetUseCase {
     constructor(
@@ -8,7 +8,7 @@ export class GetUseCase {
     ) {
     }
 
-    async execute(id: Id): Promise<ProfileEntity> {
+    async execute(id: ProfileId): Promise<ProfileEntity> {
         const profile = await this.profileRepository.findById(id);
 
         if (!profile) {

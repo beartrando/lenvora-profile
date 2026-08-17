@@ -1,5 +1,5 @@
 import ProfileEntity from "../entities/profile.entity";
-import Id from "../value-objects/id.vo";
+import Id from "../value-objects/ProfileId.vo";
 
 export interface ProfileRepository {
     findById(id: Id): Promise<ProfileEntity | null>;

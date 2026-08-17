@@ -1,8 +1,8 @@
 import {UserObject} from "../../../contracts/proto/auth";
-import Id from "../../../domain/value-objects/id.vo";
 import GetOrCreateUseCase from "../../../application/use-cases/profile/get-or-create";
 import logger from "@shared/logger";
 import UseCaseInterface from "../interfaces/use-case.interface";
+import Id from "../../../domain/common/value-objects/id.vo";
 
 export class UserCreatedConsumer implements UseCaseInterface<UserObject> {
     constructor(

@@ -1,10 +1,11 @@
 import {Profile} from "@prisma/client";
-import ProfileEntity from "../../../domain/entities/profile.entity";
-import Id from "../../../domain/value-objects/id.vo";
-import Nickname from "../../../domain/value-objects/profile/nickname.vo";
-import Level from "../../../domain/value-objects/profile/level.vo";
-import Rating from "../../../domain/value-objects/profile/rating.vo";
-import Experience from "../../../domain/value-objects/profile/experience.vo";
+import ProfileEntity from "../../../domain/profile/profile.entity";
+import Id from "../../../domain/common/value-objects/id.vo";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
+import Nickname from "../../../domain/profile/value-objects/nickname.vo";
+import Level from "../../../domain/profile/value-objects/level.vo";
+import Rating from "../../../domain/profile/value-objects/rating.vo";
+import Experience from "../../../domain/profile/value-objects/experience.vo";
 
 type ProfileSaveData = Omit<
     Profile,
@@ -25,7 +26,7 @@ export class ProfileDbMapper {
 
     static toDomain(profile: Profile): ProfileEntity {
         return new ProfileEntity(
-            new Id(profile.id),
+            new ProfileId(profile.id),
             new Id(profile.userId),
             new Nickname(profile.nickname),
             new Level(profile.level),

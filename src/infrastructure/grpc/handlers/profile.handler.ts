@@ -9,8 +9,9 @@ import AuthHelper from "../helpers/auth.helper";
 import GetOrCreateUseCase from "../../../application/use-cases/profile/get-or-create";
 import GetByUserUseCase from "../../../application/use-cases/profile/get-by-user";
 import ProfileProtoMapper from "../mappers/profile.proto.mapper";
-import Id from "../../../domain/value-objects/id.vo";
 import {NotFoundError} from "@shared/errors";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
+import Id from "../../../domain/common/value-objects/id.vo";
 
 
 export class ProfileHandler {
@@ -52,7 +53,7 @@ export class ProfileHandler {
             const {profileId} = call.request;
             // logger.log('getProfileById ' + profileId);
 
-            const profile = await this.getUseCase.execute(new Id(profileId));
+            const profile = await this.getUseCase.execute(new ProfileId(profileId));
 
             const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
 

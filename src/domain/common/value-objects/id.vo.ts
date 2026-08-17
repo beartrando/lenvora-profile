@@ -1,5 +1,3 @@
-import {randomUUID} from "crypto";
-
 export class Id {
     constructor(
         readonly value: string,
@@ -11,10 +9,6 @@ export class Id {
         if (/\s/.test(value)) {
             throw new Error("Id cannot contain whitespace");
         }
-    }
-
-    static create(): Id {
-        return new Id(randomUUID());
     }
 
     equals(other: Id): boolean {

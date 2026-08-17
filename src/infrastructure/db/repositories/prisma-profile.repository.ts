@@ -1,9 +1,10 @@
 import {PrismaClient} from "@prisma/client";
 
-import ProfileRepository from "../../../domain/repositories/profile.repository";
-import ProfileEntity from "../../../domain/entities/profile.entity";
+import ProfileRepository from "../../../domain/profile/profile.repository";
+import ProfileEntity from "../../../domain/profile/profile.entity";
 
-import Id from "../../../domain/value-objects/id.vo";
+import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
+import Id from "../../../domain/common/value-objects/id.vo";
 import ProfileDbMapper from "../mappers/profile.mapper";
 
 export class PrismaProfileRepository implements ProfileRepository {
@@ -14,7 +15,7 @@ export class PrismaProfileRepository implements ProfileRepository {
     }
 
     async findById(
-        id: Id,
+        id: ProfileId,
     ): Promise<ProfileEntity | null> {
         const profile = await this.prisma.profile.findUnique({
             where: {

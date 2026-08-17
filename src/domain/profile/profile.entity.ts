@@ -1,11 +1,12 @@
-import Id from "../value-objects/id.vo";
-import Nickname from "../value-objects/profile/nickname.vo";
-import Level from "../value-objects/profile/level.vo";
-import Rating from "../value-objects/profile/rating.vo";
-import Experience from "../value-objects/profile/experience.vo";
+import Id from "../common/value-objects/id.vo";
+import ProfileId from "../profile/value-objects/profile-id.vo";
+import Nickname from "../profile/value-objects/nickname.vo";
+import Level from "../profile/value-objects/level.vo";
+import Rating from "../profile/value-objects/rating.vo";
+import Experience from "../profile/value-objects/experience.vo";
 
 type ProfileEntityProps = {
-    id?: Id;
+    id?: ProfileId;
     userId: Id;
     nickname?: Nickname;
     level?: Level;
@@ -17,7 +18,7 @@ type ProfileEntityProps = {
 
 export class ProfileEntity {
     constructor(
-        readonly id: Id,
+        readonly id: ProfileId,
         readonly userId: Id,
         readonly nickname: Nickname,
         readonly level: Level,
@@ -34,7 +35,7 @@ export class ProfileEntity {
         const now = new Date();
 
         return new ProfileEntity(
-            props.id ?? Id.create(),
+            props.id ?? ProfileId.create(),
             props.userId,
             props.nickname ?? ProfileEntity.generateGuestNickname(),
             props.level ?? new Level(1),
