@@ -1,4 +1,4 @@
-import Id from "../../domain/value-objects/ProfileId.vo";
+import Id from "../../domain/common/value-objects/id.vo";
 import AccessToken from "../../domain/common/value-objects/access-token.vo";
 
 export interface TokenService {
