@@ -1,10 +1,8 @@
 import ProfileRepository from "../../../domain/profile/profile.repository";
 import ProfileEntity from "../../../domain/profile/profile.entity";
 import JobService from "../../../infrastructure/job/service";
-import Id from "../../../domain/common/value-objects/id.vo";
-import logger from "@shared/logger";
-import ProfileMapper from "../../../infrastructure/db/mappers/profile.mapper";
 import ProfileProtoMapper from "../../../infrastructure/grpc/mappers/profile.proto.mapper";
+import UserId from "../../../domain/user/value-objects/user-id.vo";
 
 export class GetOrCreateUseCase {
     constructor(
@@ -14,7 +12,7 @@ export class GetOrCreateUseCase {
     ) {
     }
 
-    async execute(userId: Id): Promise<ProfileEntity> {
+    async execute(userId: UserId): Promise<ProfileEntity> {
 
         const existing = await this.profileRepository.findByUserId(userId);
 

@@ -2,7 +2,7 @@ import {UserObject} from "../../../contracts/proto/auth";
 import GetOrCreateUseCase from "../../../application/use-cases/profile/get-or-create";
 import logger from "@shared/logger";
 import UseCaseInterface from "../interfaces/use-case.interface";
-import Id from "../../../domain/common/value-objects/id.vo";
+import UserId from "../../../domain/user/value-objects/user-id.vo";
 
 export class UserCreatedConsumer implements UseCaseInterface<UserObject> {
     constructor(
@@ -15,7 +15,7 @@ export class UserCreatedConsumer implements UseCaseInterface<UserObject> {
         try {
 
             // logger.log(message);
-            const userId = new Id(message.id);
+            const userId = new UserId(message.id);
 
             await this.getOrCreateUseCase.execute(userId);
         } catch (error) {

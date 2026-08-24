@@ -4,8 +4,8 @@ import ProfileRepository from "../../../domain/profile/profile.repository";
 import ProfileEntity from "../../../domain/profile/profile.entity";
 
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
-import Id from "../../../domain/common/value-objects/id.vo";
 import ProfileDbMapper from "../mappers/profile.mapper";
+import UserId from "../../../domain/user/value-objects/user-id.vo";
 
 export class PrismaProfileRepository implements ProfileRepository {
 
@@ -55,7 +55,7 @@ export class PrismaProfileRepository implements ProfileRepository {
     }
 
     async findByUserId(
-        userId: Id,
+        userId: UserId,
     ): Promise<ProfileEntity | null> {
         const profile = await this.prisma.profile.findUnique({
             where: {userId: userId.value},

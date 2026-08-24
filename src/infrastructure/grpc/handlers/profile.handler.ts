@@ -11,7 +11,7 @@ import GetByUserUseCase from "../../../application/use-cases/profile/get-by-user
 import ProfileProtoMapper from "../mappers/profile.proto.mapper";
 import {NotFoundError} from "@shared/errors";
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
-import Id from "../../../domain/common/value-objects/id.vo";
+import UserId from "../../../domain/user/value-objects/user-id.vo";
 
 
 export class ProfileHandler {
@@ -78,7 +78,7 @@ export class ProfileHandler {
 
             const {userId} = call.request;
 
-            const profile = await this.getByUserUseCase.execute(new Id(userId));
+            const profile = await this.getByUserUseCase.execute(new UserId(userId));
 
             const result = profileProto.ProfileResponse.create({profile: ProfileProtoMapper.toProto(profile)});
 
