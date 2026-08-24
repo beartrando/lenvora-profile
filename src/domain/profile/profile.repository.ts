@@ -1,5 +1,4 @@
 import ProfileEntity from "../profile/profile.entity";
-import Id from "../common/value-objects/id.vo";
 import ProfileId from "../profile/value-objects/profile-id.vo";
 
 export interface ProfileRepository {
