@@ -36,7 +36,7 @@ export class Application {
         } catch (err) {
             logger.error(
                 {err},
-                '💥 Failed to start Profile',
+                '💥 Failed to start Profile service',
             );
             process.exit(1);
         }
