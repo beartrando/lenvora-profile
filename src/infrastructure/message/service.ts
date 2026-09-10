@@ -52,11 +52,13 @@ export class MessageService {
     }
 
     private async createConsumers(): Promise<void> {
-        // console.log('USER CREATED CONSUMER CREATED', crypto.randomUUID());
+        // logger.log(this.consumers);
         for (const consumer of this.consumers) {
-            // console.log('USER CREATED CONSUMER CREATED!!!!!!!!!!!!!!!!!!!!!!!', crypto.randomUUID());
             await createConsumer(
-                this.config,
+                {
+                    ...this.config,
+                    groupId: `${this.config.groupId}-${consumer.topic}`,
+                },
                 consumer,
             );
         }
