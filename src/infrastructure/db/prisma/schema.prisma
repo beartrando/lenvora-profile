@@ -11,7 +11,7 @@ datasource db {
 
 model Profile {
   id         String @id @default(uuid())
-  userId     String @unique
+  userId     String @unique @map("user_id")
   nickname   String @default("guest")
   level      Int    @default(1)
   rating     Int    @default(1000)
@@ -19,22 +19,25 @@ model Profile {
 
   achievements ProfileAchievement[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("profiles")
 }
 
 model ProfileAchievement {
   id            String @id @default(uuid())
-  profileId     String
-  achievementId String
+  profileId     String @map("profile_id")
+  achievementId String @map("achievement_id")
 
   profile     Profile     @relation(fields: [profileId], references: [id])
   achievement Achievement @relation(fields: [achievementId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([profileId, achievementId])
+  @@map("profile_achievements")
 }
 
 model Achievement {
@@ -42,16 +45,20 @@ model Achievement {
   title       String  @unique
   description String?
 
-  Profiles ProfileAchievement[]
+  profiles ProfileAchievement[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("achievements")
 }
 
 model ExperienceLevel {
   level        Int @id
-  nextRequired Int
+  nextRequired Int @map("next_required")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("experience_levels")
 }
