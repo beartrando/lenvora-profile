@@ -89,7 +89,7 @@ export class ProfileHandler {
             callback(null, result);
 
         } catch (err: any) {
-            logger.log(err);
+            // logger.log(err);
             callbackError(callback, err);
         }
     }

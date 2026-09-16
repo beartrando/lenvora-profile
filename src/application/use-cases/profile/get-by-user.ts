@@ -1,6 +1,7 @@
 import ProfileRepository from "../../../domain/profile/profile.repository";
 import ProfileEntity from "../../../domain/profile/profile.entity";
 import UserId from "../../../domain/user/value-objects/user-id.vo";
+import {NotFoundError} from "@shared/errors";
 
 export class GetByUserUseCase {
     constructor(
@@ -10,13 +11,13 @@ export class GetByUserUseCase {
 
     async execute(userId: UserId): Promise<ProfileEntity> {
 
-        const user = await this.profileRepository.findByUserId(userId);
+        const profile = await this.profileRepository.findByUserId(userId);
 
-        if (!user) {
-            throw new Error("Profile does not exist");
+        if (!profile) {
+            throw new NotFoundError('Profile');
         }
 
-        return user;
+        return profile;
     }
 }
 
