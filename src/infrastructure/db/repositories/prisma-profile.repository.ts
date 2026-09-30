@@ -4,7 +4,7 @@ import ProfileRepository from "../../../domain/profile/profile.repository";
 import ProfileEntity from "../../../domain/profile/profile.entity";
 
 import ProfileId from "../../../domain/profile/value-objects/profile-id.vo";
-import ProfileDbMapper from "../mappers/profile.mapper";
+import ProfileDbMapper from "../mappers/profile.db.mapper";
 import UserId from "../../../domain/user/value-objects/user-id.vo";
 
 export class PrismaProfileRepository implements ProfileRepository {
