@@ -28,4 +28,3 @@ export class UserCreatedConsumer implements UseCaseInterface<UserObject> {
 }
 
 export default UserCreatedConsumer;
-

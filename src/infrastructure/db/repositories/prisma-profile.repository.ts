@@ -71,9 +71,3 @@ export class PrismaProfileRepository implements ProfileRepository {
 }
 
 export default PrismaProfileRepository;
-
-
-
-
-
-

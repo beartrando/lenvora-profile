@@ -21,4 +21,3 @@ export class GetUseCase {
 
 
 export default GetUseCase;
-

@@ -23,4 +23,3 @@ export class GetByUserUseCase {
 
 
 export default GetByUserUseCase;
-
