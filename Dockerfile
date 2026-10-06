@@ -18,7 +18,6 @@ COPY services/profile/package*.json ./services/profile/
 COPY services/profile/jest.config.js ./services/profile/
 COPY services/profile/tsconfig.json ./services/profile/
 COPY services/profile/src ./services/profile/src/
-COPY services/profile/__tests__ ./services/profile/__tests__/
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
