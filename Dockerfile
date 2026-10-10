@@ -17,6 +17,7 @@ COPY tsconfig.base.json ./
 COPY services/profile/package*.json ./services/profile/
 COPY services/profile/jest.config.js ./services/profile/
 COPY services/profile/tsconfig.json ./services/profile/
+COPY services/profile/jest.setup.ts ./services/profile/
 COPY services/profile/src ./services/profile/src/
 
 RUN apt-get update \
